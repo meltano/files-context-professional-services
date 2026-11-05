@@ -1,0 +1,58 @@
+version: datasets/v0.3
+title: "Professional services: modelling it in dbt"
+questions: How should raw professional services data be modelled in dbt so that it reconciles?
+description: |
+  Conventions for building dbt models on raw professional services data. They apply on top of the
+  workspace's usual dbt layout: staging, then intermediate, then marts.
+
+  ## Time
+
+  - **Normalise units in staging.** Some systems store hours, some six-minute units (0.1 hours), some
+    minutes. Convert once and name the column for its unit (`hours`, `units`).
+  - Keep the **work date** and the **posted date** separate. Utilisation uses the work date; WIP and
+    billing use posted dates.
+  - Time entries are edited, **transferred between matters** and split. Take the source's transaction
+    or audit table where there is one, or snapshot the entries, so a figure as at last month-end does
+    not change.
+  - Keep the **narrative** out of marts. It is rarely needed for metrics and is the most sensitive
+    column in the dataset.
+
+  ## Rates and value
+
+  - Model **rate cards as effective-dated** ranges and join on the work date, not today's rate.
+  - Carry **standard value**, **agreed (client) value** and **billed value** as separate columns on
+    each time entry, so every realisation measure comes from one model.
+  - On fixed-fee and capped matters, the bill is not itemised by entry. Allocate the billed amount to
+    time entries by standard value, and document the rule.
+  - Store money as `numeric`/`decimal` with its currency, never as floating point.
+
+  ## WIP and debtors
+
+  - Build **WIP as at each month-end** (`fct_wip_monthly`) from entry history: recorded but not billed
+    or written off by that date.
+  - Build debtors the same way from bills and receipt allocations, with ageing from the bill date.
+  - Treat write-offs, write-downs and credit notes as their own rows, never as edits to the original.
+
+  ## Capacity
+
+  - Build **capacity per person per day** from HR: contracted hours by weekday, part-time patterns,
+    public holidays by office, leave, and start and leave dates. Join it to time for utilisation.
+  - Keep the grade and department **as at the work date** (snapshot the person), so a promotion does
+    not rewrite history.
+
+  ## Tests
+
+  - `unique` and `not_null` on time entry, bill and matter keys; **accepted values** on entry status
+    and billable flags.
+  - Hours per person per day are between 0 and 24, and no time is recorded on a closed matter.
+  - **WIP roll-forward:** opening WIP + time recorded − billed − written off = closing WIP, per month.
+  - Bill allocations sum to the bill's fee total; receipts allocated never exceed the bill total.
+  - **Reconciliation:** fees billed per month agree with the finance system.
+
+  ## Sensitive columns
+
+  Tag narratives, client and matter names, and salary costs in the model YAML (for example
+  `meta: {confidential: true}`), and apply information barriers in the warehouse as in the source.
+  See *Professional services: handling the data*.
+
+  #professional-services #organisation-context

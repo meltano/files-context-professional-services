@@ -1,0 +1,58 @@
+version: datasets/v0.3
+title: "Professional services: industry overview"
+questions: What does a professional services organisation's data look like, and where does it come from?
+description: |
+  Industry context for this workspace, for the people and AI assistants working in it. It has no
+  query: it is a briefing to read before modelling or analysing this organisation's data.
+
+  ## Segments
+
+  Professional services firms sell the time and expertise of their people. Most of their data
+  describes who worked on what, for which client, and how much of it was billed and paid. The
+  segments differ in vocabulary and pricing:
+
+  - **Law firms:** clients and matters, fee earners recording time in six-minute units, disbursements,
+    bills, write-offs and lockup.
+  - **Accountancy, audit and tax:** clients, engagements and recurring jobs (year-end accounts, tax
+    returns, payroll), often on fixed fees, with seasonal peaks around filing deadlines.
+  - **Management, IT and engineering consultancy:** clients, projects and statements of work, on time
+    and materials, fixed price or milestones, with resource planning across a bench.
+  - **Architecture, engineering and surveying:** projects in stages (for example the RIBA Plan of Work
+    in the UK), fees as a percentage of construction cost or fixed by stage.
+  - **Marketing, creative and digital agencies:** retainers and projects, with time tracked against
+    scopes and third-party costs passed through with a mark-up.
+
+  Pricing models shared across them: time and materials, fixed fee, capped fee, retainer, milestone
+  and success (contingency) fees.
+
+  ## Typical source systems
+
+  | System | Examples | What it holds |
+  |---|---|---|
+  | Professional services automation (PSA) | Kantata, Certinia PSA, Accelo, Productive, Replicon | Projects, resource plans, time, expenses, budgets, billing |
+  | Time tracking | Harvest, Toggl Track, Clockify | Time entries by person, client, project and task |
+  | Legal practice management | Elite 3E, Aderant Expert, Clio, Actionstep, LEAP | Clients, matters, time, disbursements, bills, receipts, WIP |
+  | Accounting practice management | IRIS, CCH iFirm, Xero Practice Manager, Karbon, Senta | Clients, jobs, deadlines, time, fees |
+  | Intake, conflicts and risk | Intapp | New client and matter intake, conflict checks, information barriers |
+  | Resource planning | Float, Resource Guru, Harvest Forecast | Bookings and capacity by person |
+  | CRM | Salesforce, HubSpot, LexisNexis InterAction | Clients, contacts, opportunities, proposals |
+  | Finance / ERP | NetSuite, Sage Intacct, Xero, Workday | General ledger, invoices, receivables, cost |
+  | HR | HiBob, Workday, BambooHR | People, grades, contracted hours, leave, salary cost |
+  | Document management | iManage, NetDocuments | Document metadata by client and matter (load metadata, not contents) |
+
+  ## What makes the data different
+
+  - **Time is the unit of production.** Hours recorded, at a rate, become work in progress (WIP),
+    then bills, then cash. Most metrics measure leakage between those steps.
+  - **Three rates for every hour.** The standard (rack) rate, the agreed client rate and the rate
+    actually achieved once a bill is discounted or written down differ, and reports must say which.
+  - **Records change after the fact.** Time is entered late, moved between matters, written down and
+    rebilled. Totals "as at" a date need history.
+  - **Capacity depends on people data.** Utilisation needs each person's contracted hours, leave and
+    start and leave dates from HR.
+  - **Client data is confidential.** Time narratives and matter names can disclose privileged or
+    inside information. See *Professional services: handling the data*.
+
+  Related datasets: *data model*, *metrics*, *modelling it in dbt*, *handling the data*.
+
+  #professional-services #organisation-context

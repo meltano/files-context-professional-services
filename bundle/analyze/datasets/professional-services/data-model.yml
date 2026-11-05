@@ -1,0 +1,40 @@
+version: datasets/v0.3
+title: "Professional services: data model"
+questions: What are the core entities of professional services data, and at what grain should each be modelled?
+description: |
+  The entities most professional services data reduces to, with the grain and key of each. Use it
+  to map raw source tables onto a consistent model. Names are suggestions; keep the organisation's
+  own terms where they already exist (a matter, engagement, job and project are often the same thing).
+
+  | Entity | Grain (one row per…) | Notes |
+  |---|---|---|
+  | `client` | client | Often grouped into client groups or parent companies for reporting |
+  | `matter` (engagement, project) | matter | Client, practice area or service line, responsible partner, open and close dates, fee arrangement, status |
+  | `phase` / `task` | phase or task | Breaks a matter into stages for budgets and fixed fees. Legal work may use UTBMS task codes |
+  | `person` (fee earner, timekeeper) | person | Grade or role, office, department, start and leave dates, contracted hours per week |
+  | `rate_card` | person or grade × client or matter × effective date | Standard and agreed rates, with currency. Effective-dated |
+  | `time_entry` | time entry | Person, matter, task, work date, hours (or units), rate, value, narrative, billable flag, status (draft, posted, billed, written off) |
+  | `expense` (disbursement) | expense | Recoverable or not, cost and billed amounts, supplier |
+  | `bill` (invoice) | bill | Client, matter, bill date, fees, disbursements, tax, total, currency, status |
+  | `bill_allocation` | bill × time entry or expense | How much of each entry's value was billed, written down or written off |
+  | `receipt` | payment received | Allocated to bills. Unallocated cash is held on account |
+  | `budget` (estimate) | matter or phase × version | Agreed hours and fees. Keep each version |
+  | `booking` (resource allocation) | person × matter × week (or day) | Planned hours. Compare with time recorded |
+  | `capacity` | person × day | Available hours after contracted hours, holidays and leave |
+  | `opportunity` | opportunity | Pipeline stage, value, probability, expected start |
+
+  ## Relationships
+
+  - A **client** has many **matters**; a matter has **phases** and a **budget**.
+  - A **person** records **time entries** and **expenses** against matters, priced by a **rate card**.
+  - A **bill** covers time and expenses through **bill allocations**, and is paid by **receipts**.
+  - Unbilled time and expenses are **WIP**; unpaid bills are **debtors** (receivables).
+  - **Bookings** plan a person's time, and **capacity** says how much time they have.
+
+  ## Status and history
+
+  Time entries are posted, transferred, billed and written off; matters close and reopen; rates and
+  budgets are revised. WIP and debtors are always reported "as at" a date, so keep the history of
+  each entry's status and value, not only the latest state.
+
+  #professional-services #organisation-context

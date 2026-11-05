@@ -1,0 +1,53 @@
+version: datasets/v0.3
+title: "Professional services: key metrics"
+questions: Which metrics does a professional services organisation run on, and how is each calculated?
+description: |
+  Standard definitions of the metrics professional services firms report. Confirm each one with the
+  finance team or practice leaders before building it: firms differ on what counts as available
+  time, which rate is "standard" and when a write-off is recognised.
+
+  ## People and time
+
+  | Metric | Definition |
+  |---|---|
+  | Utilisation (chargeability) | Billable hours ÷ available hours. Say whether available hours are contracted hours, or contracted less holidays and leave |
+  | Target utilisation | The agreed billable percentage by grade. Report actual against it |
+  | Billable hours per fee earner | Billable hours recorded ÷ full-time-equivalent fee earners, per period |
+  | Time capture lag | Days between the work date and the date the entry was recorded |
+  | Booking accuracy | Hours recorded ÷ hours booked (planned), by person or matter |
+  | Leverage | Non-partner fee earners ÷ partners (or equity partners) |
+
+  ## Pricing and realisation
+
+  | Metric | Definition |
+  |---|---|
+  | Standard value | Hours recorded × standard rate |
+  | Billing realisation | Value billed ÷ standard value of the time and expenses billed |
+  | Collection realisation | Cash collected ÷ value billed |
+  | Overall realisation (recovery) | Cash collected ÷ standard value. Firms also call it recovery |
+  | Effective rate | Fees billed (or collected) ÷ hours worked |
+  | Write-off rate | Value written off or down ÷ standard value, by matter, partner or client |
+  | Budget variance | Actual hours or fees ÷ budget − 1, by matter or phase. Overruns on fixed fees are lost margin |
+
+  ## Working capital
+
+  | Metric | Definition |
+  |---|---|
+  | Work in progress (WIP) | Value of time and expenses recorded but not yet billed, at the period end. Say at which rate |
+  | WIP days (lockup) | WIP ÷ average daily fees billed over a trailing period |
+  | Debtor days | Unpaid bills ÷ average daily fees billed over the same period |
+  | Total lockup | WIP days + debtor days: days from doing the work to being paid |
+  | Aged debt | Unpaid bills bucketed by days since the bill date: 0–30, 31–60, 61–90, 90+ |
+
+  ## Firm performance
+
+  | Metric | Definition |
+  |---|---|
+  | Revenue per fee earner (or per lawyer) | Fee income ÷ average full-time-equivalent fee earners |
+  | Profit per equity partner (PEP) | Distributable profit ÷ average number of equity partners (law firms) |
+  | Matter (project) margin | (Fees − cost of time at salary cost − unrecoverable expenses) ÷ fees |
+  | Backlog | Contracted fees not yet delivered |
+  | Win rate | Opportunities won ÷ opportunities decided, by value or count |
+  | Client concentration | Fees from the top 10 clients ÷ total fees |
+
+  #professional-services #organisation-context

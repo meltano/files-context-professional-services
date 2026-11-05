@@ -1,0 +1,51 @@
+version: datasets/v0.3
+title: "Professional services: handling the data"
+questions: What care does professional services data need in the warehouse?
+description: |
+  Professional services data is about clients' confidential affairs, and in law and accountancy it
+  can be privileged or inside information. These are general practices for a warehouse holding it.
+  They are not legal or compliance advice: the firm's risk, compliance and data protection teams
+  decide what applies to it.
+
+  ## Classify the data
+
+  | Class | Examples | Handling |
+  |---|---|---|
+  | Privileged and client-confidential content | Time narratives, matter descriptions, document titles, advice | Leave it out of the warehouse where possible. If it is loaded, restrict it to the matter's team |
+  | Inside information | Matter names and clients on undisclosed deals, transactions, investigations | Apply information barriers (ethical walls) in the warehouse as strictly as in the source systems |
+  | Client identity and due diligence | Client ID documents, beneficial ownership, AML risk ratings | Keep the documents in the source system. Load only the check status and dates |
+  | Staff data | Salaries, cost rates, performance ratings, leave reasons | Restrict to HR and finance. Use grade-level cost rates for margin reporting |
+  | Commercial terms | Rates, discounts, fee arrangements, budgets | Confidential per client. Restrict to partners and finance |
+  | Personal data | Names and contact details of clients, contacts and counterparties | Restrict access, mask in non-production and in marts that do not need it |
+
+  ## Practices
+
+  - **Least privilege by matter.** Firms often restrict matters to named people. Carry the matter's
+    access list into the warehouse and apply it with row-level security, rather than granting a
+    whole schema.
+  - **Aggregate for firm reporting.** Utilisation, realisation and lockup need numbers by person,
+    matter and client, not narratives or document metadata.
+  - **No production data in development** without masking client and matter names.
+  - **Client terms.** Engagement letters and outside counsel guidelines may restrict where client data
+    is stored, who may see it and whether it may be processed by third parties or AI tools. Check
+    before loading a client's data into a new system.
+  - **Retention.** Client files and AML due diligence records have minimum retention periods (under
+    the UK Money Laundering Regulations, usually five years after the relationship ends), while
+    personal data must not be kept longer than needed. Agree the periods with compliance.
+  - **Data subject requests.** Under GDPR and UK GDPR a person can ask for their data or for its
+    erasure, though privilege and legal obligations can limit what is released or deleted.
+
+  ## Regulators and rules to be aware of
+
+  Which apply depends on the firm's country and profession. Common ones:
+
+  - **UK:** UK GDPR; the Solicitors Regulation Authority (SRA) for solicitors; ICAEW, ACCA and the
+    Financial Reporting Council (FRC) for accountants and auditors; the Money Laundering Regulations
+    2017 for legal, accountancy and tax services; UK MAR for inside information on listed companies.
+  - **EU:** GDPR, national bar and audit rules, anti-money laundering directives.
+  - **US:** state bar rules based on the ABA Model Rules (Rule 1.6 on confidentiality), AICPA
+    standards, SEC and PCAOB auditor independence rules, state privacy laws.
+  - **Clients' own rules:** many regulated clients (banks, insurers) impose information security
+    requirements on their advisers by contract.
+
+  #professional-services #organisation-context
